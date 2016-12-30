@@ -50,35 +50,38 @@ Using nuget:
 	}
 	```
 2. Create a few responses and requests:
+
 	```cs
 	// For backend api
 	public class IsUsernameAvaliableWebRequestDTO: CustomRequestDTO
-  {
+  	{
 		public string Username { get; set;}
-  }
+  	}
 	public class IsUsernameAvaliableWebResponseDTO: CustomResponseDTO
-  {
+  	{
 		public bool IsAvaliable { get; set;}
-  }
+  	}
 	// Another layer of requests/responses for the microservices layer to ensure separation
 	public class IsUsernameAvaliableRequestDTO: CustomRequestDTO
-  {
+  	{
 		public string Username { get; set;}
-  }
+  	}
 	public class IsUsernameAvaliableResponseDTO: CustomResponseDTO
-  {
+  	{
 		public bool IsAvaliable { get; set;}
-  }
+  	}
 	```
 2. Now we can go to our Program.cs and look at couple of interesting methods first let's look at *constructor*:
+
 	```cs
 	var req = new IsUsernameAvaliableWebRequestDTO()
-  {
+	{
 		Username = "Peter"
-  };
+  	};
 	```
 	It's nothing special really but what's important happens inside. This is the *ONLY* place where you use constructor. The reason for that is constructor intializes data like Corelation ID and a few more. You therefore only want to call it once (or let ASP.net Core take care of it when used as Request in an action) 
 3. Let's look at what got initiliazed:
+	
 	```cs
 	Console.WriteLine("Created first request\nId:{0}\nTimestamp:{1}\nDepth:{2}\nTimeTakenGlobal:{3}\nTimeTakenLocal:{4}\nJourney:{5}\nValue:{6}\n\n", 
     req.OperationId, 
@@ -89,20 +92,20 @@ Using nuget:
     string.Join("\n", req.GetJourney()),
     req.Username);
 	```
-..* *OperationId* - Corelation id unique for the chain of requests/responses
-..* *EnterTimestamp* - Timestamp of when the request was created
-..* *Depth* - Depth of the request response chain
-..* *TimeTakenGlobal* - Total time from the first request
-..* *TimeTakenLocal* - Time from the last request/response to the current one
-..* *GetJourney()* - Returns a list of requests/responses. Basically whole chain.
-..* *Username* - This comes from our concrete DTO
+	* *OperationId* - Corelation id unique for the chain of requests/responses
+	* *EnterTimestamp* - Timestamp of when the request was created
+	* *Depth* - Depth of the request response chain
+	* *TimeTakenGlobal* - Total time from the first request
+	* *TimeTakenLocal* - Time from the last request/response to the current one
+	* *GetJourney()* - Returns a list of requests/responses. Basically whole chain.
+	* *Username* - This comes from our concrete DTO
 4. Now let's create another request out of this one (this can look simmilar to mapping)
 	```cs
 	var plugReq = req.GetRequest<IsUsernameAvaliableRequestDTO>(operationInner =>
-  {
-    operationInner.Username = req.Username;
-    return operationInner;
-  });
+	{
+		operationInner.Username = req.Username;
+		return operationInner;
+	});
 	Console.WriteLine("Created first request\nId:{0}\nTimestamp:{1}\nDepth:{2}\nTimeTakenGlobal:{3}\nTimeTakenLocal:{4}\nJourney:{5}\nValue:{6}\n\n", 
     req.OperationId, //Stays the same
     req.EnterTimestamp, //Stays the same
@@ -112,44 +115,52 @@ Using nuget:
     string.Join("\n", req.GetJourney()), //Curently contains 2 requests
     req.Username);
 	```
+	
 	Notice how we didn't use the constructor this time. We used generic method GetRequest (we would use GetResponse equivalent for a response) providing generic parameter that defines that actual type of the request we want to create. IsUsernameAvaliableRequestDTO in this case. 
-5. Journey
-	You might want to opt out/in from creating Journey which is chain of requests responses. You can enable disable this feature by calling:
+5. You might want to opt out/in from creating Journey which is chain of requests responses. You can enable disable this feature by calling:
+	
 	```cs
-  req.LogJourney(); // enables
+  	req.LogJourney(); // enables
 	req.LogJourney(false); // disables
+	```
 6. Check out the full example in this [repo](https://github.com/PeterKottas/DotNetCore.RequestResponse/blob/master/Source/PeterKottas.DotNetCore.RequestResponse.Example/Program.cs)
+
 ## Advanced usage
 In the previous example, we looked at the most basic setup. But what if you want to create your own base classes and override what happens in them? Let's do just that with an example scenario:
 Let's say we want to add a property *Counter* sole purpose of which will be to responses/requests we got so far:
+
 1. Start by creating base operation, request and response. Operation is the base for both request and response allowing for implementation shared between request and response
+	
 	```cs
 	public abstract class CustomOperationDTO : BaseOperationDTO<CustomRequestDTO, CustomResponseDTO, CustomOperationDTO>
-  {
-  }
+  	{
+  	}
 	public abstract class CustomRequestDTO : CustomOperationDTO
-  {
-  }
+  	{
+  	}
 	public abstract class CustomResponseDTO : CustomOperationDTO
-  {
-  }
+  	{
+  	}
 	```
 2. Add required property:
+	
 	```cs
 	public abstract class CustomOperationDTO : BaseOperationDTO<CustomRequestDTO, CustomResponseDTO, CustomOperationDTO>
-  {
+  	{
 		public int Counter {get;set;}
-  }
+  	}
 	```
 2. Override a method responsible for creating a new operation instance:
+	
 	```cs
 	protected override sealed BASE_CLASS GetOperationCustom<BASE_CLASS>(BASE_CLASS operation)
-  {
-    operation.Counter = this.Counter + 1;
-    return operation;
-  }
+  	{
+    		operation.Counter = this.Counter + 1;
+    		return operation;
+  	}
 	```
 3. And we're done. 
+	
 	Notice how we first create a new Conrete class out of the generic parameter. Then perform any logic while generics ensure "type safety". Full example [here](https://github.com/PeterKottas/DotNetCore.RequestResponse/blob/master/Source/PeterKottas.DotNetCore.RequestResponse.Example/DTO/CustomBaseOperationDTO.cs)
 
 ## Contributing
