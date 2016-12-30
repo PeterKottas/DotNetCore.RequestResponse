@@ -151,6 +151,7 @@ Let's say we want to add a property *Counter* sole purpose of which will be to r
   	}
 	```
 2. Override a method responsible for creating a new operation instance:
+	
 	```cs
 	protected override sealed BASE_CLASS GetOperationCustom<BASE_CLASS>(BASE_CLASS operation)
   	{
