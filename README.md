@@ -92,13 +92,13 @@ Using nuget:
     string.Join("\n", req.GetJourney()),
     req.Username);
 	```
-..* *OperationId* - Corelation id unique for the chain of requests/responses
-..* *EnterTimestamp* - Timestamp of when the request was created
-..* *Depth* - Depth of the request response chain
-..* *TimeTakenGlobal* - Total time from the first request
-..* *TimeTakenLocal* - Time from the last request/response to the current one
-..* *GetJourney()* - Returns a list of requests/responses. Basically whole chain.
-..* *Username* - This comes from our concrete DTO
+	..* *OperationId* - Corelation id unique for the chain of requests/responses
+	..* *EnterTimestamp* - Timestamp of when the request was created
+	..* *Depth* - Depth of the request response chain
+	..* *TimeTakenGlobal* - Total time from the first request
+	..* *TimeTakenLocal* - Time from the last request/response to the current one
+	..* *GetJourney()* - Returns a list of requests/responses. Basically whole chain.
+	..* *Username* - This comes from our concrete DTO
 4. Now let's create another request out of this one (this can look simmilar to mapping)
 	```cs
 	var plugReq = req.GetRequest<IsUsernameAvaliableRequestDTO>(operationInner =>
