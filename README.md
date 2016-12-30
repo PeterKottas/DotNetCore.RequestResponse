@@ -1,6 +1,6 @@
 # DotNetCore.RequestResponse
 
-With this lib, it probably makes sense to first explain *WHY* you need and only then start discussing how we solve it.
+It probably makes sense to first explain *WHY* you need it and only then start discussing what it actually does.
 The potential "customer" of this lib will be a person working with horizontaly scalable c# architecture although I think it brings some value to all of you out there.
 
 ## Why
