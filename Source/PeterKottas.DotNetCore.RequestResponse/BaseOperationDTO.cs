@@ -3,7 +3,9 @@ using System.Collections.Generic;
 
 namespace PeterKottas.DotNetCore.RequestResponse
 {
-    public abstract class BaseOperationDTO<BASE_REQUEST, BASE_RESPONSE> where BASE_REQUEST: BaseRequestDTO<BASE_REQUEST, BASE_RESPONSE> where BASE_RESPONSE: BaseResponseDTO<BASE_REQUEST, BASE_RESPONSE>
+    public abstract class BaseOperationDTO<BASE_REQUEST, BASE_RESPONSE> 
+        where BASE_REQUEST: BaseRequestDTO<BASE_REQUEST, BASE_RESPONSE> 
+        where BASE_RESPONSE: BaseResponseDTO<BASE_REQUEST, BASE_RESPONSE>
     {
         public Guid OperationId { get; set; }
         public long EnterTimestamp { get; set; }

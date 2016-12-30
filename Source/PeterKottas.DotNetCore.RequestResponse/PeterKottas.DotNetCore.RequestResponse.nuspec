@@ -3,16 +3,20 @@
   <metadata>
     <id>PeterKottas.DotNetCore.RequestResponse</id>
     <title>PeterKottas.DotNetCore.RequestResponse</title>
-    <version>1.0.5</version>
+    <version>1.0.1</version>
     <authors>Peter Kottas</authors>
-    <description>Easiest to use library that allows one to host .net core as windows services there is.</description>
-    <summary>.NET Core Windows service</summary>
+    <description>Lifesaver when working with horizontally scalable micro services in .NETCore. This library ensures and exposes vital properties of request and response properties like corelation id, entry time-stamp and tree depth.</description>
+    <summary>.NET Core Request response pattern</summary>
     <language>en-US</language>
-    <tags>dotnetcore,.netcore,'windows service','micro service'</tags>
+    <tags>dotnetcore,.netcore,'request response','micro service',architecture</tags>
     <projectUrl>https://github.com/PeterKottas/DotNetCore.RequestResponse</projectUrl>
     <licenseUrl>https://github.com/PeterKottas/DotNetCore.RequestResponse/blob/master/LICENSE</licenseUrl>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="9.0.1"/>
+    </dependencies>
   </metadata>
 	<files>
     <file src="bin\Release\netcoreapp1.1\*.dll" target="lib\netcoreapp1.1" />
+    <file src="bin\Release\netstandard1.6\*.dll" target="lib\netstandard1.6" />
   </files>
 </package>

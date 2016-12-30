@@ -16,7 +16,7 @@ namespace PeterKottas.DotNetCore.RequestResponse
             return request;
         }
 
-        protected override REQUEST_CONCRETE GetRequestInner<REQUEST_CONCRETE>()
+        protected sealed override REQUEST_CONCRETE GetRequestInner<REQUEST_CONCRETE>()
         {
             var request = GetRequestOuter<REQUEST_CONCRETE>();
             request.Depth = this.Depth;
@@ -29,7 +29,7 @@ namespace PeterKottas.DotNetCore.RequestResponse
             return request;
         }
 
-        protected override RESPONSE_CONCRETE GetResponseInner<RESPONSE_CONCRETE>()
+        protected sealed override RESPONSE_CONCRETE GetResponseInner<RESPONSE_CONCRETE>()
         {
             var request = GetResponseOuter<RESPONSE_CONCRETE>();
             request.Depth = this.Depth - 1;

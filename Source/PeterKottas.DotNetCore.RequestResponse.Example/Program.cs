@@ -12,7 +12,7 @@ namespace PeterKottas.DotNetCore.RequestResponse.Example
             {
                 Username = "Peter"
             };
-            //req.LogJourney();
+            req.LogJourney();
             Console.WriteLine("Created first request\nId:{0}\nTimestamp:{1}\nDepth:{2}\nTimeTakenGlobal:{3}\nTimeTakenLocal:{4}\nJourney:{5}\nValue:{6}\n\n", 
                 req.OperationId, 
                 req.EnterTimestamp, 
