@@ -1,7 +1,7 @@
 # DotNetCore.RequestResponse
 
 It probably makes sense to first explain *WHY* you need it and only then start discussing what it actually does.
-The potential "customer" of this lib will be a person working with horizontaly scalable c# architecture although I think it brings some value to all of you out there.
+The potential user of this library will be a person working with horizontaly scalable c# architecture although I think it brings some value to all of you out there.
 
 ## Why
 
@@ -13,11 +13,11 @@ Imagine you have 5 config manager services running. One is missconfigured for so
 
 Enter Correlation IDs. I am not saying this is something new. The basic idea that was around forever I guess is to assign an ID to the whole request response chain. So you would create a base class, put ID in it. Generate it once and then pass it along. Right?
 
-Well ... Imagine how much code that is. Every time you need to do it and you can't *forget*. Ensure that. I dare. Therefore we need a framework to make this possible. And that's where this library comes in.
+Well ... Imagine how much code that is. Every time you need to do it and you can't *forget*. It's kind of hard to do that, isn't it. Therefore we need a framework to make this much much easier. And that's where this library comes in.
 
 ## Bonus
 
-You guys who came here are probably already thinking about it but I'll say it anyways. App dynamics ring a bell? What this lib provides is basically very very poor men's solution to simmilar problems AD is tackling so well. You'd just need a loger and some frontend and you know what's going on in your lib. Easy as that :)
+You guys who came here are probably already thinking about it but I'll say it anyways. App dynamics, ring a bell? What this lib provides is basically very very poor men's solution to simmilar problems AD is tackling so well. You'd just need a loger and some frontend and you know what's going on in your lib. Easy as that :)
 
 ## Installation
 
@@ -100,6 +100,7 @@ Using nuget:
 	* *GetJourney()* - Returns a list of requests/responses. Basically whole chain.
 	* *Username* - This comes from our concrete DTO
 4. Now let's create another request out of this one (this can look simmilar to mapping)
+	
 	```cs
 	var plugReq = req.GetRequest<IsUsernameAvaliableRequestDTO>(operationInner =>
 	{
