@@ -1,6 +1,7 @@
 ﻿using PeterKottas.DotNetCore.RequestResponse.Example.DTO;
 using System;
 using System.Threading;
+using PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney;
 
 namespace PeterKottas.DotNetCore.RequestResponse.Example
 {
@@ -8,23 +9,23 @@ namespace PeterKottas.DotNetCore.RequestResponse.Example
     {
         public static void Main(string[] args)
         {
-            var req = new WebRequestDTO()
+            var req = new IsUsernameAvaliableWebRequestDTO()
             {
                 Username = "Peter"
             };
             req.LogJourney();
-            Console.WriteLine("Created first request\nId:{0}\nTimestamp:{1}\nDepth:{2}\nTimeTakenGlobal:{3}\nTimeTakenLocal:{4}\nJourney:{5}\nValue:{6}\n\n", 
-                req.OperationId, 
-                req.EnterTimestamp, 
-                req.Depth, 
+            Console.WriteLine("Created first request\nId:{0}\nTimestamp:{1}\nDepth:{2}\nTimeTakenGlobal:{3}\nTimeTakenLocal:{4}\nJourney:{5}\nValue:{6}\n\n",
+                req.OperationId,
+                req.EnterTimestamp,
+                req.Depth,
                 req.TimeTakenGlobal,
                 req.TimeTakenLocal,
                 string.Join("\n", req.GetJourney()),
                 req.Username);
             Thread.Sleep(50);
-            var plugReq = req.GetRequest<PluginRequestDTO>(operationInner =>
+            var plugReq = req.GetRequest<IsUsernameAvaliableRequestDTO>(operationInner =>
             {
-                operationInner.UserName = req.Username;
+                operationInner.Username = req.Username;
                 return operationInner;
             });
             Console.WriteLine("Created second request\nId:{0}\nTimestamp:{1}\nDepth:{2}\nTimeTakenGlobal:{3}\nTimeTakenLocal:{4}\nJourney:{5}\nValue:{6}\n\n",
@@ -34,10 +35,10 @@ namespace PeterKottas.DotNetCore.RequestResponse.Example
                 plugReq.TimeTakenGlobal,
                 plugReq.TimeTakenLocal,
                 string.Join("\n", plugReq.GetJourney()),
-                plugReq.UserName);
+                plugReq.Username);
 
             Thread.Sleep(50);
-            var plugResp = plugReq.GetResponse<PluginResponseDTO>(operationInner =>
+            var plugResp = plugReq.GetResponse<IsUsernameAvaliableResponseDTO>(operationInner =>
             {
                 operationInner.IsAvaliable = true;
                 return operationInner;
@@ -49,9 +50,10 @@ namespace PeterKottas.DotNetCore.RequestResponse.Example
                 plugResp.TimeTakenGlobal,
                 plugResp.TimeTakenLocal,
                 string.Join("\n", plugResp.GetJourney()),
-                plugResp.Counter);
+                plugResp.IsAvaliable
+                );
             Thread.Sleep(50);
-            var webResp = plugResp.GetResponse<WebResponseDTO>(operationInner =>
+            var webResp = plugResp.GetResponse<IsUsernameAvaliableWebResponseDTO>(operationInner =>
             {
                 operationInner.IsAvaliable = plugResp.IsAvaliable;
                 return operationInner;
@@ -62,8 +64,9 @@ namespace PeterKottas.DotNetCore.RequestResponse.Example
                 webResp.Depth,
                 webResp.TimeTakenGlobal,
                 webResp.TimeTakenLocal,
-                string.Join("\n", webResp.GetJourney()),
-                webResp.Counter);
+                string.Join("\n", webResp.GetJourneyJsonFlat()),
+                webResp.IsAvaliable
+                );
             Console.ReadKey();
         }
     }

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace PeterKottas.DotNetCore.RequestResponse.Example.DTO
 {
-    public class WebRequestDTO : CustomBaseRequestDTO
+    public class IsUsernameAvaliableWebResponseDTO : CustomBaseResponseDTO
     {
-        public string Username { get; set; }
+        public bool IsAvaliable { get; set; }
     }
 }

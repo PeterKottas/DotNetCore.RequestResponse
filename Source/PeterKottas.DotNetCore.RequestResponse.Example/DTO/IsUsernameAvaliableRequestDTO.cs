@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace PeterKottas.DotNetCore.RequestResponse.Example.DTO
 {
-    public class PluginRequestDTO : CustomBaseRequestDTO
+    public class IsUsernameAvaliableRequestDTO : CustomBaseRequestDTO
     {
-        public string UserName { get; set; }
+        public string Username { get; set; }
     }
 }

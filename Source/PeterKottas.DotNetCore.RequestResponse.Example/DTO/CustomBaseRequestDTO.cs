@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PeterKottas.DotNetCore.RequestResponse.Example.DTO
 {
-    public class CustomBaseRequestDTO: BaseRequestDTO<CustomBaseRequestDTO, CustomBaseResponseDTO>
+    public class CustomBaseRequestDTO : CustomBaseOperationDTO
     {
     }
 }
