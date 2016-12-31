@@ -53,20 +53,20 @@ Using nuget:
 
 	```cs
 	// For backend api
-	public class IsUsernameAvaliableWebRequestDTO: CustomRequestDTO
+	public class IsUsernameAvaliableWebRequestDTO: RequestDTO
   	{
 		public string Username { get; set;}
   	}
-	public class IsUsernameAvaliableWebResponseDTO: CustomResponseDTO
+	public class IsUsernameAvaliableWebResponseDTO: ResponseDTO
   	{
 		public bool IsAvaliable { get; set;}
   	}
 	// Another layer of requests/responses for the microservices layer to ensure separation
-	public class IsUsernameAvaliableRequestDTO: CustomRequestDTO
+	public class IsUsernameAvaliableRequestDTO: RequestDTO
   	{
 		public string Username { get; set;}
   	}
-	public class IsUsernameAvaliableResponseDTO: CustomResponseDTO
+	public class IsUsernameAvaliableResponseDTO: ResponseDTO
   	{
 		public bool IsAvaliable { get; set;}
   	}
@@ -133,20 +133,20 @@ Let's say we want to add a property *Counter* sole purpose of which will be to r
 1. Start by creating base operation, request and response. Operation is the base for both request and response allowing for implementation shared between request and response
 	
 	```cs
-	public abstract class CustomOperationDTO : BaseOperationDTO<CustomRequestDTO, CustomResponseDTO, CustomOperationDTO>
+	public abstract class OperationDTO : BaseOperationDTO<CustomRequestDTO, CustomResponseDTO, OperationDTO>
   	{
   	}
-	public abstract class CustomRequestDTO : CustomOperationDTO
+	public abstract class CustomRequestDTO : OperationDTO
   	{
   	}
-	public abstract class CustomResponseDTO : CustomOperationDTO
+	public abstract class CustomResponseDTO : OperationDTO
   	{
   	}
 	```
 2. Add required property:
 	
 	```cs
-	public abstract class CustomOperationDTO : BaseOperationDTO<CustomRequestDTO, CustomResponseDTO, CustomOperationDTO>
+	public abstract class OperationDTO : BaseOperationDTO<CustomRequestDTO, CustomResponseDTO, OperationDTO>
   	{
 		public int Counter {get;set;}
   	}

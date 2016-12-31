@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PeterKottas.DotNetCore.RequestResponse;
+using PeterKottas.DotNetCore.RequestResponse.Base;
+
 namespace PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney
 {
     public static class JourneyExtensions

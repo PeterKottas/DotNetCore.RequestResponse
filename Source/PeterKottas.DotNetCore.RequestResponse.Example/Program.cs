@@ -16,7 +16,7 @@ namespace PeterKottas.DotNetCore.RequestResponse.Example
             req.LogJourney();
             Console.WriteLine("Created first request\nId:{0}\nTimestamp:{1}\nDepth:{2}\nTimeTakenGlobal:{3}\nTimeTakenLocal:{4}\nJourney:{5}\nValue:{6}\n\n",
                 req.OperationId,
-                req.EnterTimestamp,
+                req.EntryTimestamp,
                 req.Depth,
                 req.TimeTakenGlobal,
                 req.TimeTakenLocal,
@@ -30,7 +30,7 @@ namespace PeterKottas.DotNetCore.RequestResponse.Example
             });
             Console.WriteLine("Created second request\nId:{0}\nTimestamp:{1}\nDepth:{2}\nTimeTakenGlobal:{3}\nTimeTakenLocal:{4}\nJourney:{5}\nValue:{6}\n\n",
                 plugReq.OperationId,
-                plugReq.EnterTimestamp,
+                plugReq.EntryTimestamp,
                 plugReq.Depth,
                 plugReq.TimeTakenGlobal,
                 plugReq.TimeTakenLocal,
@@ -45,7 +45,7 @@ namespace PeterKottas.DotNetCore.RequestResponse.Example
             });
             Console.WriteLine("Created first response\nId:{0}\nTimestamp:{1}\nDepth:{2}\nTimeTakenGlobal:{3}\nTimeTakenLocal:{4}\nJourney:{5}\nValue:{6}\n\n",
                 plugResp.OperationId,
-                plugResp.EnterTimestamp,
+                plugResp.EntryTimestamp,
                 plugResp.Depth,
                 plugResp.TimeTakenGlobal,
                 plugResp.TimeTakenLocal,
@@ -60,7 +60,7 @@ namespace PeterKottas.DotNetCore.RequestResponse.Example
             });
             Console.WriteLine("Created second response\nId:{0}\nTimestamp:{1}\nDepth:{2}\nTimeTakenGlobal:{3}\nTimeTakenLocal:{4}\nJourney:{5}\nValue:{6}\n\n",
                 webResp.OperationId,
-                webResp.EnterTimestamp,
+                webResp.EntryTimestamp,
                 webResp.Depth,
                 webResp.TimeTakenGlobal,
                 webResp.TimeTakenLocal,

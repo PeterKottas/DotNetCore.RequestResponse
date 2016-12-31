@@ -3,7 +3,7 @@
   <metadata>
     <id>PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney</id>
     <title>PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney</title>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Peter Kottas</authors>
     <description>Extensions for PeterKottas.DotNetCore.RequestResponse used to serialize Journey</description>
     <summary>.NET Core Request response pattern</summary>
