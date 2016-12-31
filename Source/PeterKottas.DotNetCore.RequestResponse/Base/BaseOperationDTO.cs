@@ -20,12 +20,12 @@ namespace PeterKottas.DotNetCore.RequestResponse.Base
         /// <summary>
         /// Operation id, identifier that uniquely defines whole chain of requests/responses
         /// </summary>
-        public Guid OperationId { get; private set; }
+        public Guid OperationId { get; set; }
 
         /// <summary>
         /// Timestamp of when the first request/response was created
         /// </summary>
-        public long EntryTimestamp { get; private set; }
+        public long EntryTimestamp { get; set; }
 
         /// <summary>
         /// Depth of the chain
@@ -35,12 +35,12 @@ namespace PeterKottas.DotNetCore.RequestResponse.Base
         /// <summary>
         /// Time taken from first request/response in chain in ms
         /// </summary>
-        public long TimeTakenGlobal { get; private set; }
+        public long TimeTakenGlobal { get; set; }
 
         /// <summary>
         /// Time taken since the last request/response in chain in ms
         /// </summary>
-        public long TimeTakenLocal { get; private set; }
+        public long TimeTakenLocal { get; set; }
 
         private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 

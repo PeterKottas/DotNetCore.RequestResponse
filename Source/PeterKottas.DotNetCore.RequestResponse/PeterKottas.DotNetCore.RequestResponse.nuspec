@@ -3,7 +3,7 @@
   <metadata>
     <id>PeterKottas.DotNetCore.RequestResponse</id>
     <title>PeterKottas.DotNetCore.RequestResponse</title>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <authors>Peter Kottas</authors>
     <description>Lifesaver when working with horizontally scalable micro services in .NETCore. This library ensures and exposes vital properties of request and response properties like corelation id, entry time-stamp and tree depth.</description>
     <summary>.NET Core Request response pattern</summary>

@@ -3,7 +3,7 @@
   <metadata>
     <id>PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney</id>
     <title>PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney</title>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <authors>Peter Kottas</authors>
     <description>Extensions for PeterKottas.DotNetCore.RequestResponse used to serialize Journey</description>
     <summary>.NET Core Request response pattern</summary>
@@ -13,6 +13,7 @@
     <licenseUrl>https://github.com/PeterKottas/DotNetCore.RequestResponse/blob/master/LICENSE</licenseUrl>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="9.0.1"/>
+      <dependency id="PeterKottas.DotNetCore.RequestResponse" version="1.0.4"/>
     </dependencies>
   </metadata>
   <files>
