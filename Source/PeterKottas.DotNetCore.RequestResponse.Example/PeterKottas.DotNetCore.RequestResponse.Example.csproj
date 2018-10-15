@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <AssemblyName>PeterKottas.DotNetCore.RequestResponse.Example</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>PeterKottas.DotNetCore.RequestResponse.Example</PackageId>
+    <RuntimeIdentifiers>win81-x64</RuntimeIdentifiers>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>
+    <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PeterKottas.DotNetCore.RequestResponse\PeterKottas.DotNetCore.RequestResponse.csproj" />
+    <ProjectReference Include="..\PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney\PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney.csproj" />
+  </ItemGroup>
+
+</Project>
