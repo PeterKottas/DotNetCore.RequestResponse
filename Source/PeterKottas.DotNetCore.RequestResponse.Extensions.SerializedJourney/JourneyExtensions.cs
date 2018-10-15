@@ -1,26 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using PeterKottas.DotNetCore.RequestResponse;
 using PeterKottas.DotNetCore.RequestResponse.Base;
 
 namespace PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney
 {
     public static class JourneyExtensions
     {
-        public static List<string> GetJourneyJson<BASE_REQUEST, BASE_RESPONSE, BASE>(this BaseOperationDTO<BASE_REQUEST, BASE_RESPONSE, BASE> operation)
-            where BASE_REQUEST : BASE
-            where BASE_RESPONSE : BASE
-            where BASE : BaseOperationDTO<BASE_REQUEST, BASE_RESPONSE, BASE>, new()
+        public static List<string> GetJourneyJson<TBaseRequest, TBaseResponse, TBase>(this BaseOperationDTO<TBaseRequest, TBaseResponse, TBase> operation)
+            where TBaseRequest : TBase
+            where TBaseResponse : TBase
+            where TBase : BaseOperationDTO<TBaseRequest, TBaseResponse, TBase>, new()
         {
-            return operation.GetJourney().Select(operationInList => Newtonsoft.Json.JsonConvert.SerializeObject(operationInList)).ToList();
+            return operation.GetJourney().Select(Newtonsoft.Json.JsonConvert.SerializeObject).ToList();
         }
 
-        public static string GetJourneyJsonFlat<BASE_REQUEST, BASE_RESPONSE, BASE>(this BaseOperationDTO<BASE_REQUEST, BASE_RESPONSE, BASE> operation)
-            where BASE_REQUEST : BASE
-            where BASE_RESPONSE : BASE
-            where BASE : BaseOperationDTO<BASE_REQUEST, BASE_RESPONSE, BASE>, new()
+        public static string GetJourneyJsonFlat<TBaseRequest, TBaseResponse, TBase>(this BaseOperationDTO<TBaseRequest, TBaseResponse, TBase> operation)
+            where TBaseRequest : TBase
+            where TBaseResponse : TBase
+            where TBase : BaseOperationDTO<TBaseRequest, TBaseResponse, TBase>, new()
         {
             return Newtonsoft.Json.JsonConvert.SerializeObject(operation.GetJourney());
         }
