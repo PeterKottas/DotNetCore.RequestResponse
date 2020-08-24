@@ -172,6 +172,10 @@ Let's say we want to add a property *Counter* sole purpose of which will be to r
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request :D
 
+## Created and sponsored by
+
+- [GuestBell](https://guestbell.com/) - Customer centric online POS for Hotels and short terms stays.
+
 ## License
 
 MIT 
