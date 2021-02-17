@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PeterKottas.DotNetCore.RequestResponse", "..\Source\PeterKottas.DotNetCore.RequestResponse\PeterKottas.DotNetCore.RequestResponse.xproj", "{19F85232-0FED-439E-90BF-BDCD6567F2B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeterKottas.DotNetCore.RequestResponse", "..\Source\PeterKottas.DotNetCore.RequestResponse\PeterKottas.DotNetCore.RequestResponse.csproj", "{19F85232-0FED-439E-90BF-BDCD6567F2B3}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PeterKottas.DotNetCore.RequestResponse.Example", "..\Source\PeterKottas.DotNetCore.RequestResponse.Example\PeterKottas.DotNetCore.RequestResponse.Example.xproj", "{3F56FC81-7EE5-45E8-864D-5865E3B05D4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeterKottas.DotNetCore.RequestResponse.Example", "..\Source\PeterKottas.DotNetCore.RequestResponse.Example\PeterKottas.DotNetCore.RequestResponse.Example.csproj", "{3F56FC81-7EE5-45E8-864D-5865E3B05D4A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney", "..\Source\PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney\PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney.xproj", "{CA48AA33-3747-4986-9643-11EB94ED60C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney", "..\Source\PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney\PeterKottas.DotNetCore.RequestResponse.Extensions.SerializedJourney.csproj", "{CA48AA33-3747-4986-9643-11EB94ED60C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +30,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {53CF0919-861E-4B53-A5B9-47CD8B57E45D}
 	EndGlobalSection
 EndGlobal

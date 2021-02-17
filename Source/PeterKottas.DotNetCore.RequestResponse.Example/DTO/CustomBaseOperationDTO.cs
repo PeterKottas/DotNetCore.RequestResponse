@@ -1,8 +1,4 @@
 ﻿using PeterKottas.DotNetCore.RequestResponse.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PeterKottas.DotNetCore.RequestResponse.Example.DTO
 {
@@ -15,9 +11,10 @@ namespace PeterKottas.DotNetCore.RequestResponse.Example.DTO
             Counter = 1;
         }
 
-        protected override sealed BASE_CLASS GetOperationCustom<BASE_CLASS>(BASE_CLASS operation)
+        protected sealed override TBaseClass GetOperationCustom<TBaseClass>(TBaseClass operation)
         {
-            operation.Counter = this.Counter + 1;
+            operation.Counter = Counter + 1;
+
             return operation;
         }
     }

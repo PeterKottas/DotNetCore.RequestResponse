@@ -6,16 +6,29 @@ namespace PeterKottas.DotNetCore.RequestResponse.Base
     /// <summary>
     /// Base class for both request and response. Shared functionality of both resides here
     /// </summary>
-    /// <typeparam name="BASE_REQUEST"></typeparam>
-    /// <typeparam name="BASE_RESPONSE"></typeparam>
-    /// <typeparam name="BASE"></typeparam>
-    public abstract class BaseOperationDTO<BASE_REQUEST, BASE_RESPONSE, BASE>
-        where BASE_REQUEST : BASE
-        where BASE_RESPONSE : BASE
-        where BASE : BaseOperationDTO<BASE_REQUEST, BASE_RESPONSE, BASE>
+    /// <typeparam name="TBaseRequest"></typeparam>
+    /// <typeparam name="TBaseResponse"></typeparam>
+    /// <typeparam name="TBase"></typeparam>
+    public abstract class BaseOperationDTO<TBaseRequest, TBaseResponse, TBase>
+        where TBaseRequest : TBase
+        where TBaseResponse : TBase
+        where TBase : BaseOperationDTO<TBaseRequest, TBaseResponse, TBase>
     {
-        private List<BaseOperationDTO<BASE_REQUEST, BASE_RESPONSE, BASE>> wholeJourney;
-        private bool logJourney;
+        private List<BaseOperationDTO<TBaseRequest, TBaseResponse, TBase>> _wholeJourney;
+        private bool _logJourney;
+
+        /// <summary>
+        /// Constructor that populates all the necessary data for the first time
+        /// </summary>
+        protected BaseOperationDTO()
+        {
+            EntryTimestamp = GetCurrentUnixTimestampMillis();
+            Depth = 1;
+            OperationId = Guid.NewGuid();
+            _wholeJourney = new List<BaseOperationDTO<TBaseRequest, TBaseResponse, TBase>>();
+            TimeTakenGlobal = 0;
+            TimeTakenLocal = 0;
+        }
 
         /// <summary>
         /// Operation id, identifier that uniquely defines whole chain of requests/responses
@@ -49,30 +62,18 @@ namespace PeterKottas.DotNetCore.RequestResponse.Base
             DateTime localDateTime, univDateTime;
             localDateTime = DateTime.Now;
             univDateTime = localDateTime.ToUniversalTime();
-            return (long)(univDateTime - UnixEpoch).TotalMilliseconds;
-        }
 
-        /// <summary>
-        /// Constructor that populates all the necesary data for the first time
-        /// </summary>
-        /// <param name="logJourney"></param>
-        public BaseOperationDTO(bool logJourney = false)
-        {
-            EntryTimestamp = GetCurrentUnixTimestampMillis();
-            Depth = 1;
-            OperationId = Guid.NewGuid();
-            wholeJourney = new List<BaseOperationDTO<BASE_REQUEST, BASE_RESPONSE, BASE>>();
-            TimeTakenGlobal = 0;
-            TimeTakenLocal = 0;
+            return (long)(univDateTime - UnixEpoch).TotalMilliseconds;
         }
 
         /// <summary>
         /// Override this method in request/response DTO to provide custom functionality
         /// </summary>
-        /// <typeparam name="RESPONSE_CONCRETE"></typeparam>
+        /// <typeparam name="TResponseConcrete"></typeparam>
         /// <param name="response"></param>
         /// <returns></returns>
-        protected virtual RESPONSE_CONCRETE GetResponseCustom<RESPONSE_CONCRETE>(RESPONSE_CONCRETE response) where RESPONSE_CONCRETE : BASE_RESPONSE, new()
+        protected virtual TResponseConcrete GetResponseCustom<TResponseConcrete>(TResponseConcrete response)
+            where TResponseConcrete : TBaseResponse, new()
         {
             return response;
         }
@@ -80,10 +81,11 @@ namespace PeterKottas.DotNetCore.RequestResponse.Base
         /// <summary>
         /// Override this method in request/response DTO to provide custom functionality
         /// </summary>
-        /// <typeparam name="REQUEST_CONCRETE"></typeparam>
+        /// <typeparam name="TRequestConcrete"></typeparam>
         /// <param name="request"></param>
         /// <returns></returns>
-        protected virtual REQUEST_CONCRETE GetRequestCustom<REQUEST_CONCRETE>(REQUEST_CONCRETE request) where REQUEST_CONCRETE : BASE_REQUEST, new()
+        protected virtual TRequestConcrete GetRequestCustom<TRequestConcrete>(TRequestConcrete request)
+            where TRequestConcrete : TBaseRequest, new()
         {
             return request;
         }
@@ -91,80 +93,97 @@ namespace PeterKottas.DotNetCore.RequestResponse.Base
         /// <summary>
         /// Override this method in your custom operation DTO to provide custom functionality when creating new requests ad responses
         /// </summary>
-        /// <typeparam name="BASE_CLASS"></typeparam>
+        /// <typeparam name="TBaseClass"></typeparam>
         /// <param name="operation"></param>
         /// <returns></returns>
-        protected virtual BASE_CLASS GetOperationCustom<BASE_CLASS>(BASE_CLASS operation)
-            where BASE_CLASS : BASE
+        protected virtual TBaseClass GetOperationCustom<TBaseClass>(TBaseClass operation)
+            where TBaseClass : TBase
         {
             return operation;
         }
 
-        private BASE_CLASS GetOperation<BASE_CLASS>(BASE_CLASS operation)
-            where BASE_CLASS : BASE
+        private TBaseClass GetOperation<TBaseClass>(TBaseClass operation)
+            where TBaseClass : TBase
         {
-            operation.EntryTimestamp = this.EntryTimestamp;
-            operation.logJourney = this.logJourney;
-            operation.wholeJourney = this.wholeJourney;
-            operation.OperationId = this.OperationId;
+            operation.EntryTimestamp = EntryTimestamp;
+            operation._logJourney = _logJourney;
+            operation._wholeJourney = _wholeJourney;
+            operation.OperationId = OperationId;
+
             var currentTimestamp = GetCurrentUnixTimestampMillis();
-            operation.TimeTakenGlobal = currentTimestamp - this.EntryTimestamp;
-            operation.TimeTakenLocal = currentTimestamp - (this.EntryTimestamp + this.TimeTakenGlobal);
+
+            operation.TimeTakenGlobal = currentTimestamp - EntryTimestamp;
+            operation.TimeTakenLocal = currentTimestamp - (EntryTimestamp + TimeTakenGlobal);
             operation = GetOperationCustom(operation);
+
             return operation;
         }
 
         /// <summary>
         /// Creates request of a given type
         /// </summary>
-        /// <typeparam name="REQUEST"></typeparam>
+        /// <typeparam name="TRequest"></typeparam>
         /// <param name="initFunction"></param>
         /// <returns></returns>
-        public REQUEST GetRequest<REQUEST>(Func<REQUEST, REQUEST> initFunction = null) where REQUEST : BASE_REQUEST, new()
+        public TRequest GetRequest<TRequest>(Func<TRequest, TRequest> initFunction = null)
+            where TRequest : TBaseRequest, new()
         {
-            var request = new REQUEST();
-            if (this is BASE_REQUEST)
+            var request = new TRequest();
+
+            if (this is TBaseRequest)
             {
-                request.Depth = this.Depth + 1;
+                request.Depth = Depth + 1;
             }
             else
             {
-                request.Depth = this.Depth;
+                request.Depth = Depth;
             }
+
             request = GetOperation(request);
             request = GetRequestCustom(request);
-            request = initFunction(request);
-            if (logJourney)
+
+            if (initFunction != null)
+                request = initFunction(request);
+
+            if (_logJourney)
             {
-                wholeJourney.Add(this);
+                _wholeJourney.Add(this);
             }
+
             return request;
         }
 
         /// <summary>
         /// Creates response of a given type
         /// </summary>
-        /// <typeparam name="RESPONSE"></typeparam>
+        /// <typeparam name="TResponse"></typeparam>
         /// <param name="initFunction"></param>
         /// <returns></returns>
-        public RESPONSE GetResponse<RESPONSE>(Func<RESPONSE, RESPONSE> initFunction = null) where RESPONSE : BASE_RESPONSE, new()
+        public TResponse GetResponse<TResponse>(Func<TResponse, TResponse> initFunction = null)
+            where TResponse : TBaseResponse, new()
         {
-            var response = new RESPONSE();
-            if (this is BASE_RESPONSE)
+            var response = new TResponse();
+
+            if (this is TBaseResponse)
             {
-                response.Depth = this.Depth - 1;
+                response.Depth = Depth - 1;
             }
             else
             {
-                response.Depth = this.Depth;
+                response.Depth = Depth;
             }
+
             response = GetOperation(response);
             response = GetResponseCustom(response);
-            response = initFunction(response);
-            if (logJourney)
+
+            if (initFunction != null)
+                response = initFunction(response);
+
+            if (_logJourney)
             {
-                wholeJourney.Add(this);
+                _wholeJourney.Add(this);
             }
+
             return response;
         }
 
@@ -174,10 +193,11 @@ namespace PeterKottas.DotNetCore.RequestResponse.Base
         /// <param name="log"></param>
         public void LogJourney(bool log = true)
         {
-            logJourney = log;
-            if (logJourney)
+            _logJourney = log;
+
+            if (_logJourney)
             {
-                wholeJourney.Add(this);
+                _wholeJourney.Add(this);
             }
         }
 
@@ -185,9 +205,9 @@ namespace PeterKottas.DotNetCore.RequestResponse.Base
         /// Returns the whole journey (chain of requests and responses)
         /// </summary>
         /// <returns></returns>
-        public List<BaseOperationDTO<BASE_REQUEST, BASE_RESPONSE, BASE>> GetJourney()
+        public List<BaseOperationDTO<TBaseRequest, TBaseResponse, TBase>> GetJourney()
         {
-            return wholeJourney;
+            return _wholeJourney;
         }
     }
 }
